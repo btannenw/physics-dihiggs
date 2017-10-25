@@ -1,0 +1,11 @@
+ZeroLepton LPNHE/LimitHistograms.vvbb.13TeV.CUT_ggA.LPNHE.mc15b_CxAOD20_20150217.root mVH 
+TwoLepton Freiowa/LimitInputs.llbb.Moriond2016.13TeV.Freiowa.SimpleMerge500.ggA.180216.root
+
+# Additional Systematics (on both lepton channels, on top of the inputs production -> not available from the original input file)
+# ttbar mVH shape syst applied 
+# V+jets mVH shape syst applied [BUG FREE]
+
+# 2-lepton contains updated CDI version xAODBTaggingEfficiency/13TeV/2016-Winter-13TeV-MC15-CDI-February14_v2.root
+# 0-lepton does not
+# 2-lepton apply PU reweighting for both mc15a and mc15b
+# 0-lepton apply PU reweighting for mc15b-only

@@ -1,0 +1,11 @@
+# Version 13007 as of June 18 2014
+# No MET propagation in systematics
+# Cross-check for unblinding approval
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v7.2_mHall.root mva
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v7.2_mHall.root MV1cB1,MV1cB2
+
+ZeroLepton    CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.v7.2.root

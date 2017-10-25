@@ -1,0 +1,19 @@
+# Version 13010 as of June 23 2014
+# Complete version for unblinding approval
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    CUT 13012.8TeV
+TwoLepton     CUT 13002.8TeV
+OneLeptonMET  CUT 13013.8TeV
+OneLepton_El  CUT Iowa/LimitHistograms.lvbb.8TeV.El_CUT.Iowa.v8.5.root
+OneLepton_Mu  CUT Iowa/LimitHistograms.lvbb.8TeV.Mu_CUT.Iowa.v8.5.root
+
+
+ZeroLepton    MVA 13012.8TeV
+ZeroLepton    MVA 13012.8TeV
+OneLeptonMET  MVA 13012.8TeV
+OneLepton_El   MVA Iowa/LimitHistograms.lvbb.8TeV.El_MVA_WlvH125.Iowa.v8.5.4.root
+OneLepton_Mu   MVA Iowa/LimitHistograms.lvbb.8TeV.Mu_MVA_WlvH125.Iowa.v8.5.4.root
+TwoLepton     MVA 13002.8TeV mva,MV1cB1,MV1cB2

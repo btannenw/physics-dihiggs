@@ -1,0 +1,13 @@
+# 14-04-09
+# inputs with updated modelling systs
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+CoreRegions
+OneLepton    MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WH125.Iowa.v7.0.root
+OneLepton    MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_VZ.Iowa.v7.0.root
+OneLepton    CUT CERN/LimitHistograms.lvbb.8TeV.CUT.CERN.v4.mJJ.root
+TwoLepton    MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.MVA_mH125.LiverpoolBmham.v32.root mva,MV1cB1,MV1cB2,mvaVZ
+TwoLepton    CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.CUT.LiverpoolBmham.v32.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v4_mH125.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDToutVZ_v4_mH125.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v4_mH125.root MV1cB1,MV1cB2
+ZeroLepton   CUT AcSinica/LimitHistograms.vvbb.8TeV.CUT.AcSinica.v4.1.root

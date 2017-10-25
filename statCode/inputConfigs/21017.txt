@@ -1,0 +1,15 @@
+ZeroLepton LPNHE/LimitHistograms.vvbb.13TeV.CUT_ggA.LPNHE.mc15b_CxAOD20_20150226.root
+TwoLepton  Freiowa/LimitHistograms.llbb.Moriond2016.13TeV.Freiowa.SimpleMerge500.ggA.200216.AllDistsWithSys.root
+
+
+# IDENTICAL TO 21016 FOR 2LEPTON
+# 0LEPTON INPUTS IDENTICAL TO 2015 WITHOUT DUPLICATED DATA
+# - missing 900GeV mass point in 0lepton signal ggA
+
+
+
+# Additional Systematics (on both lepton channels, on top of the inputs production -> not available from the original input file)
+# ttbar mVH shape syst applied 
+# V+jets mVH shape syst applied [BUG FREE]
+
+# including additional variables for post-fit plots

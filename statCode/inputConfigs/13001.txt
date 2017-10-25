@@ -1,0 +1,13 @@
+# Version 13001 as of June 11 2014
+# Fixed CDI (rebinning for c-jets)
+# Small fixes for 0 lepton (zvtx rew., binning for b-eff.)
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v7.1_mHall.root mva
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v7.1_mHall.root MV1cB1,MV1cB2
+TwoLepton     MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.MVA_mH125.LiverpoolBmham.v50.root mva,MV1cB1,MV1cB2,mvaVZ
+
+ZeroLepton    CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.v7.1.root
+TwoLepton     CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.CUT.LiverpoolBmham.v50.root

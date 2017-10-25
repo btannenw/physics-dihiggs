@@ -1,0 +1,397 @@
+#include "systematiclistsbuilder_hhwwbb.hpp"
+
+#include <algorithm>
+#include <map>
+#include <unordered_map>
+#include <vector>
+#include <iostream>
+
+#include <TString.h>
+
+#include "configuration.hpp"
+#include "containerhelpers.hpp"
+#include "properties.hpp"
+#include "regiontracker.hpp"
+#include "sample.hpp"
+#include "systematic.hpp"
+
+void SystematicListsBuilder_HHWWbb::fillHistoSystsRenaming() {
+}
+
+void SystematicListsBuilder_HHWWbb::listAllUserSystematics(const RegionTracker& regTrk, bool useFltNorms){
+  using P = Property;
+
+  normFact("All", {{"MC", "DataDriven"}}, (3.2/3.2), 0, 10, true);
+  //normFact("All", {{"MC", "DataDriven"}}, (10.0/3.2), 0, 10, true);
+  //normFact("All", {{"MC", "DataDriven"}}, (20.0/3.2), 0, 10, true);
+  std::vector<TString> sig_decorr = m_config.getStringList("DecorrPOI");
+
+  normSys("ATLAS_LUMI_2015_2016", 0.029, {"MC"});
+
+
+  // list them all !
+  if(sig_decorr.size() != 0) { // TODO or just extend decorrSysForCategories for the POIs ?
+    std::vector<Property> decorrelations;
+    for(auto& d : sig_decorr) {
+      decorrelations.push_back(Properties::props_from_names.at(d));
+    }
+    addPOI("SigXsecOverSM", {"Sig", {}, std::move(decorrelations)}, 1, -40, 40);
+  }
+  else {
+    addPOI("SigXsecOverSM", {"Sig"}, 1, -40, 40);
+  }
+
+  //ttbar systematics
+  bool b_mBBcr = regTrk["mBBcr"];
+  bool b_topcr = regTrk["topcr"];
+  bool b_loHi = regTrk["Xhh700"];
+  std::cout<<"%%%%% Adding systs, mBBcr bool: "<<b_mBBcr<<"\t topcr bool: "<<b_topcr<<"\t loHi bool: "<<b_loHi<<std::endl;
+
+  //normFact("ttbar",  {"ttbar", {{P::spec, "mBBcr"}}});               // Overall ttbar floating (CR only)
+  normFact("ttbar",  {"ttbar"});               // Overall ttbar floating
+
+
+  /*
+  normSys("ttbar_PS", 0.46, {"ttbar", {{P::spec, "SR"}, {P::hiLoMass, "loMass"}}});   // gaussian uncertainty of 29% for ttbar parton shower systematic
+  normSys("ttbar_ME", 0.094, {"ttbar", {{P::spec, "SR"}, {P::hiLoMass, "loMass"}}});   // gaussian uncertainty of 6% for ttbar matrix element systematic
+  normSys("ttbar_radHi", 0.01, {"ttbar", {{P::spec, "SR"}, {P::hiLoMass, "loMass"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  normSys("ttbar_radLo", 0.095, {"ttbar", {{P::spec, "SR"}, {P::hiLoMass, "loMass"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  */
+
+  /*
+  // From Suyog, Sept 9 2016
+  // LOW MASS
+  normSys("ttbar_PDF", 0.024, {"ttbar", {{P::spec, "SR"}}});     // gaussian uncertainty of 2.4% for ttbar PDF systematic, x700
+  normSys("ttbar_scale", 0.052, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 5.2% for ttbar scale systematic, x700
+  normSys("ttbar_PS", 0.46, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 29% for ttbar parton shower systematic
+  normSys("ttbar_ME", 0.094, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 6% for ttbar matrix element systematic
+  normSys("ttbar_radLo", 0.095, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  normSys("SingleTop_mod", 0.16, {"SingleTop", {{P::spec, "SR"}}}); // Suyog test: 50%
+  normSys("SingleTop_mod", 0.34, {"SingleTop", {{P::spec, "mBBcr"}}}); // Suyog test: 50%
+  //////normSys("ttbar_radHi", 0.01, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  */
+  
+  // HI MASS
+  normSys("ttbar_PDF", 0.069, {"ttbar", {{P::spec, "SR"}}});     // gaussian uncertainty of 6.9% for ttbar PDF systematic, x2000
+  normSys("ttbar_scale", 0.037, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 3.7% for ttbar scale systematic, x2000
+  normSys("ttbar_PS", 0.26, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 29% for ttbar parton shower systematic
+  normSys("ttbar_ME", 0.045, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 6% for ttbar matrix element systematic
+  normSys("ttbar_radHi", 0.065, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  normSys("SingleTop_mod", 0.66, {"SingleTop", {{P::spec, "SR"}}}); // Suyog test: 50%
+  normSys("SingleTop_mod", 0.69, {"SingleTop", {{P::spec, "mBBcr"}}}); // Suyog test: 50%
+  ////normSys("ttbar_radLo", 0.04, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  
+
+  // From Suyog, Sept 8 2016
+  //normSys("ttbar_PS", 0.29, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 29% for ttbar parton shower systematic
+  //normSys("ttbar_ME", 0.06, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 6% for ttbar matrix element systematic
+  //normSys("ttbar_radHi", 0.0425, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 4.25% for ttbar radHi systematic
+  //normSys("ttbar_radLo", 0.05, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 5% for ttbar radLo systematic
+
+  // old //normSys("ttbar_PS", 0.13, {"ttbar"});     // gaussian uncertainty of 2.4% for ttbar PDF systematic, x700 
+  // old //normSys("ttbar_ME", 0.136, {"ttbar"});   // gaussian uncertainty of 5.2% for ttbar scale systematic, x700
+  //normSys("ttbar_MEplusPS", 0.14, {"ttbar", {{P::spec, "SR"}}});   // gaussian uncertainty of 5.2% for ttbar scale systematic, x700  
+  // OKAY! // normSys("ttbar_MEplusPS", 0.14, {"ttbar"});   // gaussian uncertainty of 5.2% for ttbar scale systematic, x700
+  //normSys("ttbar_MEplusPS", 0.14, {"ttbar"});   // gaussian uncertainty of 5.2% for ttbar scale systematic, x700
+    
+  
+  // Background MC uncertainties (gaussian constraints)
+  //sampleNormSys("SingleTop", 0.053); // Wt channel Xs: 71.7 +/- 3.8 pb --> 5.3% unc
+  //sampleNormSys("SingleTop", 0.50); // Suyog test: 50% (everywhere)
+  //normSys("SingleTop_SR", 0.50, {"SingleTop", {{P::spec, "SR"}}}); // Suyog test: 50%
+  //normSys("SingleTop_mBBcr", 0.50, {"SingleTop", {{P::spec, "mBBcr"}}}); // Suyog test: 50%
+  //sampleNormSys("stopWt", 0.053); // Wt channel Xs: 71.7 +/- 3.8 pb --> 5.3% unc
+  //sampleNormSys("stops", 0.039); // s channel Xs: XX.X +/- X.X pb --> 3.9% unc
+  //sampleNormSys("stopt", 0.042); // t channel Xs: XX.X +/- X.X pb --> 4.2% unc
+  sampleNormSys("Dibosons", 0.48);
+  sampleNormSys("Wv22", 0.48); //Need to calculate from variations (twiki: https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#Recommendation_for_Sherpa_V_jets)
+  sampleNormSys("Z", 0.48); // Need to calculate from variations (slides: https://indico.cern.ch/event/504446/contributions/1182626/attachments/1236618/1816078/cg_SherpaVjetsRecommendations.pdf)
+  sampleNormSys("QCD", 0.30); //Need to calculate from tool --> rerun data (https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopMatrixMethod13TeV#single_lepton_channel_AN1)
+  
+  // Uncertainty on signal yield
+  //normSys("SysTheorySig", 0.084, {"Sig"});
+  normSys("SysSig_PDFacceptance", 0.004, {"Sig"});
+  normSys("SysSig_Scaleacceptance", 0.006, {"Sig"});
+  //normSys("SysSig_PS50", 0.50, {"Sig"});
+  
+  /*
+  // ======================
+  // Modeling Systs only in SR
+  // ======================  
+  normSys("SingleTop_unc", 0.053, {"SingleTop", {{P::spec, "SR"}}}); // Wt channel Xs: 71.7 +/- 3.8 pb --> 5.3% unc
+  normSys("Dibosons_unc", 0.48, {"Dibosons", {{P::spec, "SR"}}});
+  normSys("Wv22_unc", 0.48, {"Wv22", {{P::spec, "SR"}}}); //Need to calculate from variations (twiki: https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#Recommendation_for_Sherpa_V_jets)
+  normSys("Z_unc", 0.48, {"Z", {{P::spec, "SR"}}}); // Need to calculate from variations (slides: https://indico.cern.ch/event/504446/contributions/1182626/attachments/1236618/1816078/cg_SherpaVjetsRecommendations.pdf)
+  normSys("QCD_unc", 0.30, {"QCD", {{P::spec, "SR"}}}); //Need to calculate from tool --> rerun data (https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopMatrixMethod13TeV#single_lepton_channel_AN1)
+  */
+  
+  //FIXME , in progress July 82016,  BBT
+  ///normFact("QCDl", {{"MC", "DataDriven"}}, (3.2/3.2), 0, 10, true);
+
+  //normFact("ttbar", {"ttbar", {}, {P::spec, "topcr"}});
+
+  //sampleNormSys("Wjets", 0.40);
+
+  /*bool b_fltTop = regTrk["mBBcr"];
+  std::cout<<"%%%$$$###@@@  b_fltTop = "<<b_fltTop<<std::endl;
+  if(b_fltTop) {
+    sampleNormSys("ttbar", 0.1); //BBT Jun 1, 2016
+    std::cout<<"%%%$$$###@@@  sampleNormSys!"<<std::endl;
+  }
+  else{
+    normFact("ttbar", {"ttbar"}); // old
+    //normFact("ttbar", {"ttbar", {}, {P::descr,"mBBcr"} });
+    std::cout<<"%%%$$$###@@@  normFact!"<<std::endl;
+    }*/
+
+  return;  // HACK to allow scaling of lumi only for stat limits
+
+  // 20% uncertainty on signal yield
+  normSys("SysTheorySig", 0.20, {"Sig"});
+
+
+  // ttbar
+  // everywhere
+  bool fltTop = ((regTrk["has1tag"] || regTrk["has2tag"]) && regTrk["topcr"]);
+  if(useFltNorms && fltTop) {
+    normFact("ttbar", {"ttbar", {}, {P::nLep}});
+    //normFact("ttbar", {"ttbar"}); // old
+  }
+  else {
+    sampleNormSys("ttbar", 0.06);
+  }
+  // 3J uncertainty. Simplified wrt EPS. 2 lepton on its own. 0 and 1 lepton together
+  normSys("SysttbarNorm", 0.20, {"ttbar", {{P::nJet, 3}}, {P::nJet}, {{P::nLep, 2}}});
+  // high/low pTV uncertainty
+  normSys("SysttbarHighPtV", 0.075, {"ttbar", {{P::bin, 2}, {P::bin, 3}, {P::bin, 4}}});
+
+
+  // single top
+  // cross-sections from Top MC Twiki
+  sampleNormSys("stops", 0.04);
+  sampleNormSys("stopt", 0.04);
+  sampleNormSys("stopWt", 0.07);
+  // acceptance from MC comparisons
+  sampleNormSysByRegion("SysTChanPtB2", "stopt", 0.52, 0.25, 0.12, -0.18);
+  sampleNormSysByRegion("SysWtChanAcerMC", "stopWt", 0.01, -0.02, 0.04, -0.15);
+  sampleNormSysByRegion("SysWtChanPythiaHerwig", "stopWt", 0.05, 0.03, 0.05, -0.03);
+  sampleNormSysByRegion("SysSChanAcerMC", "stops", 0.13, 0.22, 0.18, 0.30);
+  sampleNormSysByRegion("SysSChanAcerMCPS", "stops", 0.06, 0.08, 0.04, 0.04);
+
+
+  // V+jets
+  bool floatHFOnlyForW = m_config.getValue("FloatHFOnlyForW", false);
+
+  // Wl
+  if(useFltNorms && regTrk["has0tag"] && (regTrk["hasOneLep"]) && !floatHFOnlyForW){ // || regTrk["hasZeroLep"])) {
+    normFact("Wl", {"Wl"});
+  }
+  else {
+    sampleNormSys("Wl", 0.10);
+  }
+
+  bool floatHFOnlyForZ = m_config.getValue("FloatHFOnlyForZ", false);
+
+  // Zl
+  if(useFltNorms && regTrk["has0tag"] && (regTrk["hasZeroLep"] || regTrk["hasTwoLep"]) && !floatHFOnlyForZ) {
+    normFact("Zl", {"Zl"});
+
+  }
+  else {
+    sampleNormSys("Zl", 0.05);
+  }
+
+  // Wcl and Zcl
+  if(useFltNorms && regTrk["has1tag"] && (regTrk["hasOneLep"]) && !floatHFOnlyForW) {
+    normFact("Wcl", {"Wcl"});
+  }
+  else {
+    sampleNormSys("Wcl", 0.30);
+  }
+  if(useFltNorms && regTrk["has1tag"] && (regTrk["hasTwoLep"]) && !floatHFOnlyForZ) {
+    normFact("Zcl", {"Zcl"});
+  }
+  else {
+    sampleNormSys("Zcl", 0.30);
+  }
+
+  // corresponding 3J stuff
+  sampleNorm3JSys("Zl", 0.05);
+  sampleNorm3JSys("Zcl", 0.26);
+  for(const auto& s : {"Wl", "Wcl"}) {
+    sampleNorm3JSys(s, 0.10);
+  }
+
+  // floating Wbb+Wbc+Wbl+Wcc - put extra systs on Wbl and Wcc to allow ratios to change
+  if(useFltNorms && regTrk["has2tag"] && (regTrk["hasOneLep"])) {
+    normFact("Wbb", {{"Wbb", "Wbc", "Wbl", "Wcc"}});
+  }
+  else {
+    normSys("SysWbbNorm", 0.30, {{"Wbb", "Wbc", "Wbl", "Wcc"}});
+  }
+
+  // Flavour composition
+  normSys("SysWblWbbRatio", 0.35, {"Wbl", {}, {}, {{P::bin, 0}, {P::bin, 1}}});
+  //normSys("SysWblWbbRatio", 0.35, {"Wbl"}); // old
+  normSys("SysWccWbbRatio", 0.12, {"Wcc"});
+  normSys("SysWbcWbbRatio", 0.12, {"Wbc"});
+
+  // 3J
+  normSys("SysWhfNorm", 0.10, {{"Wbb", "Wbc", "Wbl", "Wcc"}, {{P::nJet, 3}}, {P::nJet}});
+
+  // floating Zbb+Zbc+Zbl+Zcc - put extra systs on Zbl and Zcc to allow ratios to change
+  if(useFltNorms && regTrk["has2tag"] && (regTrk["hasTwoLep"])){ // || regTrk["hasZeroLep"])) {
+    normFact("Zbb", {{"Zbb", "Zbc", "Zbl", "Zcc"}});
+
+  }
+  else {
+    normSys("SysZbbNorm", 0.30, {{"Zbb", "Zbc", "Zbl", "Zcc"}});
+  }
+
+  // Flavour composition
+  normSys("SysZblZbbRatio", 0.12, {"Zbl", {}, {P::nJet}});
+  normSys("SysZccZbbRatio", 0.12, {"Zcc"});
+  normSys("SysZbcZbbRatio", 0.12, {"Zbc"});
+
+  // 3J
+  normSys("SysZbbNorm", 0.20, {{"Zbb", "Zbc", "Zbl", "Zcc"}, {{P::nJet, 3}}, {P::nJet}});
+
+
+  // Diboson
+
+  normSys("SysVVJetPDFAlphaPt", 0.03, {"WW", {{P::nJet, 2}}});
+  normSys("SysVVJetPDFAlphaPt", 0.02, {"WW", {{P::nJet, 3}}});
+  normSys("SysVVJetPDFAlphaPt", 0.04, {"WZ", {{P::nJet, 2}}});
+  normSys("SysVVJetPDFAlphaPt", 0.02, {"WZ", {{P::nJet, 3}}});
+  normSys("SysVVJetPDFAlphaPt", 0.03, {"ZZ"});
+  // Higgs
+
+  //add Higgs normalisation systematic of 50% when running resonance fits
+  //normSys("SysHiggsNorm", 0.50, {"Higgs"});
+
+
+  // multijet
+
+  normSys("ATLAS_LUMI_2015", 0.050, {"MC", {{P::year, 2015}}});
+
+}
+
+
+void SystematicListsBuilder_HHWWbb::listAllHistoSystematics(const RegionTracker& regTrk) {
+  using T = SysConfig::Treat;
+  using S = SysConfig::Smooth;
+  using P = Property;
+  //bool yes(true);     bool no(false); // correlate years ?
+
+  SysConfig noSmoothConfig { T::shape, S::noSmooth };
+  // TODO smoothConfig is noSmooth for the moment for tests
+  SysConfig smoothConfig { T::shape, S::smooth };
+
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_1" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_TTVA_SYS" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_TTVA_STAT" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_ISO_SYS" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_ISO_STAT" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMET_JetTrk_Scale" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEG_SCALE_ALL" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEG_RESOLUTION_ALL" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUONS_MS" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUONS_ID" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUONS_SCALE" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJvtEfficiency" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_EtaIntercalibration_NonClosure" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_3" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMET_SoftTrk_Scale" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_EFF_TrigStatUncertainty" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_EFF_TrigSystUncertainty" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEL_EFF_Iso_TOTAL_1NPCOR_PLUS_UNCOR" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEL_EFF_Reco_TOTAL_1NPCOR_PLUS_UNCOR" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEL_EFF_Trigger_TOTAL_1NPCOR_PLUS_UNCOR" , noSmoothConfig});
+  m_histoSysts.insert({ "SysEL_EFF_ID_TOTAL_1NPCOR_PLUS_UNCOR" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_EFF_SYS" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMUON_EFF_STAT" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_extrapolation_from_charm_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_extrapolation_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_8_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_7_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_5_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_11_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_4_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_9_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_6_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_4_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_13_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_10_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_12_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_2" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_JER_SINGLE_NP" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMET_SoftTrk_ResoPerp" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMET_SoftTrk_ResoPara" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMODEL_TTbar_RadHi" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMODEL_TTbar_RadLo" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMODEL_TTbar_PS" , noSmoothConfig});
+  m_histoSysts.insert({ "SysMODEL_TTbar_ME" , noSmoothConfig});
+
+  /* Aug 10, 2016 set of significant systs (decided by Suyog's algorithm on yields)
+     
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_B_4_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_C_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_0_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_10_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_11_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_12_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_13_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_1_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_2_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_3_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_4_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_5_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_6_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_7_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_8_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_Eigen_Light_9_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_extrapolation_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysFT_EFF_extrapolation_from_charm_AntiKt4EMTopoJets" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_EtaIntercalibration_NonClosure" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_1" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_2" , noSmoothConfig});
+  m_histoSysts.insert({ "SysJET_SR1_JET_GroupedNP_3" , noSmoothConfig});
+  */
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                          Tweaks, if needed
+  //
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+  // later can add some switches, e.g looping through m_histom_histoSysts.emplace( "Systs and
+  // putting to T::skip all the JES NP
+
+
+
+}
+
+
+
+
+
+

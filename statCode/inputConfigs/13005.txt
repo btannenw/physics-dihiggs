@@ -1,0 +1,8 @@
+# Version 13005 as of June 14 2014
+# Test 1 lepton MVA single-lepton triggers only
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+OneLepton     MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WlvH125.Iowa.v8.5.root
+

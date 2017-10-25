@@ -1,0 +1,11 @@
+
+#Version 13000 as of June 1 2014. Fixed CDI
+
+CoreRegions
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v7_mHall.root mva
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v7_mHall.root MV1cB1,MV1cB2
+TwoLepton    MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.MVA_mH125.LiverpoolBmham.v50.root mva,MV1cB1,MV1cB2,mvaVZ
+
+ZeroLepton    CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.v7.root
+TwoLepton    CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.CUT.LiverpoolBmham.v50.root
+

@@ -1,0 +1,9 @@
+# Version 13006 as of June 17 2014
+# Test of new 1 lepton cut-based inputs
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+OneLepton     CUT CERN/LimitHistograms.lvbb.LHCP2013.8TeV.CERN.v6.0.mjj.root
+OneLepton     CUT Iowa/LimitHistograms.lvbb.8TeV.CUT.Iowa.v8.5.root MV1cB1,MV1cB2
+

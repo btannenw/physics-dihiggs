@@ -1,0 +1,19 @@
+# 14-04-23
+# inputs with some fixes (SysWPtV, Zvtx, ..)
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+CoreRegions
+OneLepton    MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WH125.Iowa.v7.1.root
+#OneLepton    MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_VZ.Iowa.v7.0.root
+OneLepton    CUT CERN/LimitHistograms.lvbb.LHCP2013.8TeV.CERN.v4.2.mJJ.root
+OneLepton    CUT CERN/LimitHistograms.lvbb.LHCP2013.8TeV.CERN.v4.2.jet1MV1c.root
+OneLepton    CUT CERN/LimitHistograms.lvbb.LHCP2013.8TeV.CERN.v4.2.jet2MV1c.root
+OneLeptonMET MVA CPPM/LimitHistograms.lvbb.8TeV.MVA.CPPM.v2.2.root mva
+OneLeptonMET CUT CPPM/LimitHistograms.lvbb.8TeV.CUT.CPPM.v2.2.root
+TwoLepton    MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.MVA_mH125.LiverpoolBmham.v32.root mva,MV1cB1,MV1cB2,mvaVZ
+TwoLepton    CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.CUT.LiverpoolBmham.v32.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v5_mHall.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDToutVZ_v5_mHall.root
+ZeroLepton   MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v5_mHall.root MV1cB1,MV1cB2
+ZeroLepton   CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.HMass_v5.root
+ZeroLepton   CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.J1_MV1c_v5.root
+ZeroLepton   CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.CUT.AcSinica.J2_MV1c_v5.root

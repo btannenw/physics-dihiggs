@@ -1,0 +1,16 @@
+# Version 13004 as of June 14 2014
+# Fixed CDI (rebinning for c-jets)
+# All known MJ bugs fixed in 1 lepton SLT
+# fixed MuonEffic in 1 lepton MET
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    MVA 13002.8TeV mva
+ZeroLepton    MVA 13002.8TeV MV1cB1,MV1cB2
+TwoLepton     MVA 13002.8TeV mva,MV1cB1,MV1cB2,mvaVZ
+OneLepton     MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WlvH125.Iowa.v8.5.root
+OneLeptonMET  MVA CPPM/LimitHistograms.lvbb.8TeV.MVA_WH125.CPPM.v4.4_XET.root
+
+ZeroLepton    CUT 13002.8TeV
+TwoLepton     CUT 13002.8TeV

@@ -1,0 +1,16 @@
+# Version 13002 as of June 11 2014
+# Fixed CDI (rebinning for c-jets)
+# Small fixes for 0 lepton (zvtx rew., binning for b-eff.)
+# Some MJ fixes in 1 lepton
+# 1 lepton MET-triggered missing
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    MVA 13002.8TeV mva
+ZeroLepton    MVA 13002.8TeV MV1cB1,MV1cB2
+TwoLepton     MVA 13002.8TeV mva,MV1cB1,MV1cB2,mvaVZ
+OneLepton     MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WlvH125.Iowa.v8.4.root
+
+ZeroLepton    CUT 13002.8TeV
+TwoLepton     CUT 13002.8TeV

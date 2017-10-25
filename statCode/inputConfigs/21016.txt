@@ -1,0 +1,14 @@
+ZeroLepton LPNHE/LimitHistograms.vvbb.13TeV.CUT_ggA.LPNHE.mc15b_CxAOD20_20150221.root
+TwoLepton  Freiowa/LimitHistograms.llbb.Moriond2016.13TeV.Freiowa.SimpleMerge500.ggA.200216.AllDistsWithSys.root
+
+# THESE UNSPLITTED INPUTS ARE IDENTICAL TO 21015
+# THIS INPUTCONFIG FILE IS JUST FOR REFERENCE: 21016/ INPUTS AVAILABLE FROM Nicolas AREA INCLUDING 900GeV SIGNAL ggA MASS POINT FOR 0LEPTON (SPLITTED FILES)
+# /afs/cern.ch/work/n/nmorange/public/inputs_Run2/21016
+
+# DUPLICATED DATA IN 0LEPTON INPUTS
+
+# Additional Systematics (on both lepton channels, on top of the inputs production -> not available from the original input file)
+# ttbar mVH shape syst applied 
+# V+jets mVH shape syst applied [BUG FREE]
+
+# including additional variables for post-fit plots

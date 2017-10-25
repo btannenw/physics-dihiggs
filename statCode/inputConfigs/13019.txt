@@ -1,0 +1,17 @@
+# Version 13019 as of July 31 2014
+# spoofing fix for 1 lepton MVA
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+ZeroLepton    CUT 13012.8TeV
+TwoLepton     CUT 13002.8TeV
+OneLeptonMET  CUT 13013.8TeV
+OneLepton     CUT 13016.8TeV
+
+
+ZeroLepton    MVA 13012.8TeV
+ZeroLepton    MVA 13012.8TeV
+OneLeptonMET  MVA 13012.8TeV
+OneLepton     MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WlvH125.Iowa.v8.7.root
+TwoLepton     MVA 13002.8TeV mva,MV1cB1,MV1cB2

@@ -1,0 +1,11 @@
+#Version 12000 as of May 13 2014. MC-to-MC SF, split Wbc Zbc, TruthTagDR correction
+# Missing 1 lepton Cut-based inputs
+CoreRegions
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.BDTout125_v6.1_mHall.root mva
+ZeroLepton    MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA.AcSinica.InputVars_v6.1_mHall.root MV1cB1,MV1cB2
+OneLepton     MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WH125.Iowa.v8.0.root
+OneLeptonMET MVA LimitHistograms.lvbb.8TeV.MVA.CPPM.v3.1.root mva
+OneLeptonMET CUT LimitHistograms.lvbb.8TeV.CUT.CPPM.v3.1.root
+TwoLepton    MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.MVA_mH125.LiverpoolBmham.v42.root mva,MV1cB1,MV1cB2,mvaVZ
+TwoLepton    CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.CUT.LiverpoolBmham.v42.root
+

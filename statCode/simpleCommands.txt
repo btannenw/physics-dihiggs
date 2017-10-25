@@ -1,0 +1,3 @@
+./SplitInputs -v 11822 -r Run2 -inDir /afs/cern.ch/work/b/btannenw/hhbbWW_Analysis/CxAODCode-trunk_Apr8/WSMaker/bbWWinput/may18_rootfiles/
+
+python scripts/HHWWbb/Analysis_HH.py <version>

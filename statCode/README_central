@@ -1,0 +1,101 @@
+
+WSMaker: the HSG5 package for statistical analysis {#mainpage}
+==================================================
+
+Introduction
+------------
+
+This package performs the statistical analysis for the VHbb analysis.
+
+It has two quite independent parts:
+ * It creates workspaces from input files (ROOT files filled with histograms)
+ * It performs fits, computes limits/p0, makes postfit plots, and performs all
+ kinds of profile likelihood and fit checks.
+
+
+Creation of workspaces
+----------------------
+
+VH workspaces use MC-based PDF everywhere, and so are based on the HistFactory tool.
+However, given the complexity of the analysis, a heavy treatment is performed on
+the inputs prior to the call to `hist2workspace`
+
+### Requirements
+The basic role of WSMaker is to take input files, write corresponding XML files,
+and call `hist2workspace`. One might then wonder why it needs such a complicated
+code (~8000 SLOC of C++) to perform a simple task.
+
+It actually addresses a list of complex requirements:
+ * Easy configuration of the analysis regions that should enter the fit model
+ * Even for a super complex fit model, in terms of regions involved, with
+ different discriminant distributions used (BDT, Mjj, MV1c)
+ * Easy creation of workspaces with other distributions in the same analysis
+ regions, to make postfit plots of any distribution
+ * Use of complex rebinning schemes, to optimize fit performance while keeping
+ the total number of bins in the fit model as low as possible
+ * Smoothing of energy scale and energy resolution systematics, to avoid
+ unphysical shapes in the likelihood
+ * Various flavours of pruning of systematics, to keep the fit model as lightweight
+ as possible while keeping the full precision of the results
+ * Configure as simply as possible the systematics in the fit model:
+   + Restrict the application of systematics to some analysis regions or some
+   samples
+   + Add user-defined flat systematics on some samples, in some regions
+   + Allow for (sometimes complex) decorrelations of systematics between regions
+   or samples
+   + Easy creation of alternate workspaces with other decorrelations, to investigate
+   the fit.
+ * Can look for Higgs peak as well as diboson VZ peak, or both at the same time
+ (choice of parameter of interest)
+ * Optimization of the fit model through the merging of samples that can be fit
+ together, while keeping the model mathematically equivalent to the fully split
+ mode.
+
+### Concepts
+
+Below are listed some key concepts around which the code is built. Understanding
+these concepts gives an overview of the main classes in the code, and of their
+relations.
+
+#### Splitting of input files
+
+#### Data structure
+To easily perform the actions required on the input histograms, one needs an internal
+representation of the fit model.
+
+The code uses a "matrix" representation, where the rows
+are the samples used in the analysis (class `Sample`), and the columns are the
+analysis regions (class `Category`). The cells are then `SampleInCategory`, where
+each one then holds one nominal histogram. A third dimension arises in each cell,
+which is made of all the systematic variations attached to the nominal histogram.
+
+Depending on the task that needs be performed, an access through rows (browsing
+samples) or through columns (browsing categories) will be made.
+
+The `SampleHandler` manages the rows, while `CategoryHandler` manages the columns.
+
+#### Keywords
+In order to merge similar samples, or perform decorrelations of systematics for
+groups of samples, it is useful to be able to easily refer to a given group of
+samples.
+
+In `SampleHandler`, keywords can be attached to samples, for instance the keyword
+`Zjets` is attached to Zl, Zcl, Zcc, Zbc and Zbb samples.
+
+This mechanism fulfills the requirement mentioned above.
+
+#### %Properties
+
+#### %Configuration of systematics
+
+### Workflow
+
+### Further documentation
+The header files themselves are documented usign Doxygen syntax. All the details
+can be found there, as well as lists of allowed configuration flags, and explanations
+of the configuration syntax when it is complex.
+
+
+Fits and postfit scripts
+------------------------
+

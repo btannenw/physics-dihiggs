@@ -1,0 +1,13 @@
+#Latest BS files
+ZeroLepton CUT AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA_CUT_correlation.AcSinica.v7.2_mH125.root mjj,MV1cB1,MV1cB2
+ZeroLepton MVA AcSinica/LimitHistograms.vvbb.Moriond2014.8TeV.MVA_CUT_correlation.AcSinica.v7.2_mH125.root mva,MV1cB1,MV1cB2
+
+#full 1 lepton
+OneLepton MVA Iowa/LimitHistograms.lvbb.8TeV.MVA_WlvH125_bootstrap.Iowa.v8.5.4.root mva,MV1cB1,MV1cB2
+OneLepton CUT Iowa/LimitHistograms.lvbb.8TeV.CUT_bootstrap.Iowa.v8.5.4.root mjj,MV1cB1,MV1cB2
+#muon only 1 lepton. use scripts/creatNoElLowPtV.sh
+OneLepton_Mu MVA Iowa/LimitHistograms.lvbb.8TeV.Mu_MVA_WlvH125_bootstrap.Iowa.v8.5.4.root mva,MV1cB1,MV1cB2
+OneLepton_Mu CUT Iowa/LimitHistograms.lvbb.8TeV.Mu_CUT_bootstrap.Iowa.v8.5.4.root mjj,MV1cB1,MV1cB2
+
+TwoLepton MVA LiverpoolBmham/LimitHistograms.llbb.8TeV.BS.LiverpoolBmham.v50.root mva,MV1cB1,MV1cB2
+TwoLepton CUT LiverpoolBmham/LimitHistograms.llbb.8TeV.BS.LiverpoolBmham.v50.root mjj,MV1cB1,MV1cB2

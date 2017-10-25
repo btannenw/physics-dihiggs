@@ -1,0 +1,13 @@
+# Version 13010 as of June 23 2014
+# Complete version for unblinding approval
+# /eos/atlas/atlascerngroupdisk/phys-higgs/HSG5/Run1Paper/
+
+CoreRegions
+
+OneLepton     CUT 13008.8TeV
+ZeroLepton    CUT 13002.8TeV
+TwoLepton     CUT 13002.8TeV
+
+ZeroLepton    MVA 13002.8TeV mva,MV1cB1,MV1cB2
+TwoLepton     MVA 13002.8TeV mva,MV1cB1,MV1cB2
+OneLepton     MVA 13004.8TeV mva,MV1cB1,MV1cB2
